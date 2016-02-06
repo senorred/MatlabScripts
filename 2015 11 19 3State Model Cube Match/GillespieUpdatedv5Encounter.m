@@ -7,8 +7,8 @@ load SpatialData
 % BurstSize = geomean(BurstSizemRNA,1);
 % BurstFreq = geomean(BurstFreqmRNA,1);
 % 
-% BurstSize = BurstSizeDirectmean;
-% BurstFreq = BurstFreqDirectmean;
+BurstSize = BurstSizeDirectmean;
+BurstFreq = BurstFreqDirectmean;
 %load RecalcEncounterData
 %load tempEncounterBurstData
 
@@ -38,8 +38,8 @@ kOFFArray = 1./BurstSize;
 
 
 Runs = 50;
-tMax = 500;
-dt = 1;
+tMax = 200;
+dt = .1;
 tspan = 0:dt:tMax;
 tspan2 = length(tspan);
 
@@ -202,6 +202,7 @@ for k = 1:Runs
     Avgcv2(k) = AutoArrayTemp(len)/(SSlevelsArray(k))^2;
     AutomRNAArray(:,k) = AutomRNAArrayTemp;
     VariencemRNAArray(k) = AutomRNAArrayTemp(len);
+    t50mRNAArray(k) = find(AutomRNAArrayTemp(len:end) < .5*AutomRNAArrayTemp(len),1,'first');
     AvgmRNAcv2(k) = AutomRNAArrayTemp(len)/(SSmRNAArray2(k))^2;
 
 end
@@ -216,6 +217,7 @@ SSlevelsTot(:,j) = (SSlevelsArray);
 AutomRNAVar(:,j) = VariencemRNAArray;
 AvgmRNAcv2Tot(:,j) = AvgmRNAcv2;
 SSmRNATot(:,j) = (SSmRNAArray2);
+t50mRNATot(:,j) = t50mRNAArray;
 
 BurstDurationTrackTot(:,:,j) = BurstDurationTrack;
 BurstTimesTrackTot(:,:,j) = BurstTimesTrack;
